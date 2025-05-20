@@ -1,0 +1,532 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>Netflix UI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom, #e6e9f0, #f9fafc);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            overflow: hidden;
+        }
+
+        aside {
+            width: 192px;
+            background: white;
+            border-radius: 30px 0 0 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 1px solid #e5e7eb;
+        }
+
+        .sidebar-header {
+            padding-top: 32px;
+            padding-left: 32px;
+            padding-right: 32px;
+        }
+
+        .sidebar-header h1 {
+            font-weight: 600;
+            font-size: 15px;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            user-select: none;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            font-size: 13px;
+            color: #8f9bb3;
+            font-weight: normal;
+        }
+
+        nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #1a1a1a;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            color: #1a1a1a;
+            transition: color 0.3s;
+        }
+
+        .avatar {
+            margin-bottom: 24px;
+            background: #d7e0f2;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 16px;
+            user-select: none;
+        }
+
+        .avatar img {
+            border-radius: 50%;
+            margin-bottom: 12px;
+        }
+
+        .avatar p {
+            text-align: center;
+        }
+
+        .avatar .view-challenges {
+            background: #7a8bb9;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 6px 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .avatar .view-challenges:hover {
+            background: #5a6a9a;
+        }
+
+        main {
+            flex: 1;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            user-select: none;
+            font-weight: 600;
+        }
+
+        .top-bar .search {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e5e7eb;
+            border-radius: 9999px;
+            padding: 8px 16px;
+            width: 100%;
+            max-width: 400px;
+            color: #8f9bb3;
+        }
+
+        .top-bar .search input {
+            flex-grow: 1;
+            background: transparent;
+            outline: none;
+            font-size: 13px;
+            color: #8f9bb3;
+        }
+
+        .top-bar .search button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .notification, .message {
+            position: relative;
+            color: #8f9bb3;
+            transition: color 0.3s;
+        }
+
+        .notification:hover, .message:hover {
+            color: #1a1a1a;
+        }
+
+        .notification .badge, .message .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 12px;
+            height: 12px;
+            background: #e50914;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .featured-show {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            min-height: 180px;
+            max-height: 35vh;
+        }
+
+        .featured-show img {
+            width: 100%;
+            height: 100%;
+          
+        }
+
+        .featured-show .info {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            color: white;
+            max-width: 60%;
+            user-select: none;
+        }
+
+        .featured-show .info h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .featured-show .info .details {
+            display: flex;
+            gap: 16px;
+            font-size: 11px;
+            opacity: 0.8;
+            margin-bottom: 12px;
+        }
+
+        .featured-show .info .buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .featured-show .info .buttons button {
+            background: #e50914;
+            border-radius: 9999px;
+            padding: 8px 24px;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .featured-show .info .buttons button:hover {
+            background: #b0070f;
+        }
+
+        .parties-section, .continue-watching-section {
+            gap: 12px;
+            user-select: none;
+        }
+
+        .parties-section h3, .continue-watching-section h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .parties-section .slider {
+            width: 96px;
+            accent-color: #e50914;
+        }
+
+        .parties-list, .continue-watching-list {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 8px 0;
+        }
+
+        .party, .continue-watching-item {
+            min-width: 110px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .party img, .continue-watching-item img {
+            border-radius: 50%;
+            margin-bottom: 8px;
+        }
+
+        .party h4, .continue-watching-item p {
+            margin-bottom: 4px;
+        }
+
+        .party .avatars, .continue-watching-item .resolution {
+            display: flex;
+            gap: -4px;
+            justify-content: center;
+        }
+
+        .party .avatars img, .continue-watching-item .resolution {
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .right-bar {
+            width: 56px;
+            background: white;
+            border-radius: 0 30px 30px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 0;
+            border-left: 1px solid #e5e7eb;
+            user-select: none;
+        }
+
+        .right-bar button, .right-bar img {
+            margin-bottom: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .right-bar button {
+            background: #e50914;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .right-bar button:hover {
+            background: #b0070f;
+        }
+
+        .right-bar img:hover {
+            ring: 2px solid #e50914;
+        }
+
+        /* Scrollbar for parties and continue watching horizontal scroll */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside>
+            <div class="sidebar-header">
+                <h1>Netflix.</h1>
+                <nav>
+                    <a href="#">
+                        <span class="w-5 h-5 rounded-full bg-[#e50914] flex items-center justify-center text-white text-[10px] font-bold select-none">1</span>
+                        <i class="fas fa-play-circle text-[14px]"></i>
+                        <span>Browse</span>
+                    </a>
+                    <a href="#">
+                        <i class="far fa-bookmark text-[14px]"></i>
+                        <span>Watchlist</span>
+                    </a>
+                    <a href="#">
+                        <i class="far fa-clock text-[14px]"></i>
+                        <span>Coming soon</span>
+                    </a>
+                    <div class="border-t border-gray-200 mt-8 pt-8"></div>
+                    <a href="#">
+                        <i class="far fa-user text-[14px]"></i>
+                        <span>Friends</span>
+                    </a>
+                    <a href="#">
+                        <i class="fas fa-users text-[14px]"></i>
+                        <span>Parties</span>
+                    </a>
+                    <div class="border-t border-gray-200 mt-8 pt-8"></div>
+                    <a href="#">
+                        <i class="fas fa-cog text-[14px]"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#">
+                        <i class="fas fa-sign-out-alt text-[14px]"></i>
+                        <span>Log out</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="avatar">
+                <img alt="Avatar of Popcorn Addict with dark hair and glasses" src="https://storage.googleapis.com/a1aa/image/1a73758c-3e0c-48fd-932e-b2e0f17455eb.jpg" width="48" height="48"/>
+                <p class="text-[11px] text-[#4f5d7a] font-semibold mb-1 text-center leading-tight">Popcorn Addict</p>
+                <p class="text-[9px] text-[#7a8bb9] mb-3 text-center leading-tight">4.8h viewing time</p>
+                <button class="view-challenges">View challenges</button>
+            </div>
+        </aside>
+        <!-- Main content -->
+        <main>
+            <!-- Top bar -->
+            <div class="top-bar">
+                <div class="flex items-center space-x-3 text-[#8f9bb3] text-[13px]">
+                    <button aria-label="Previous" class="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors duration-300">
+                        <i class="fas fa-chevron-left text-[12px] text-[#8f9bb3]"></i>
+                    </button>
+                    <button aria-label="Next" class="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors duration-300">
+                        <i class="fas fa-chevron-right text-[12px] text-[#8f9bb3]"></i>
+                    </button>
+                </div>
+                <form aria-label="Search" class="search" role="search">
+                    <input class="flex-grow bg-transparent outline-none text-[13px] placeholder-[#8f9bb3]" placeholder="Search..." type="search"/>
+                    <button aria-label="Search button" type="submit">
+                        <i class="fas fa-search text-[14px]"></i>
+                    </button>
+                </form>
+                <div class="flex items-center space-x-6">
+                    <button aria-label="Notifications" class="notification">
+                        <i class="far fa-bell text-[18px]"></i>
+                        <span class="badge"></span>
+                    </button>
+                    <button aria-label="Messages" class="message">
+                        <i class="far fa-envelope text-[18px]"></i>
+                        <span class="badge"></span>
+                    </button>
+                    <div class="flex items-center space-x-2 cursor-pointer select-none">
+                        <img alt="Avatar of Ramona F. with brown hair and orange background" class="rounded-full" src="https://storage.googleapis.com/a1aa/image/a55ef719-f360-41bc-f762-1c252a0a99fa.jpg" width="32" height="32"/>
+                        <div class="text-right">
+                            <p class="text-[13px] font-semibold text-[#1a1a1a] leading-none">Ramona F.</p>
+                            <p class="text-[9px] text-[#8f9bb3] leading-none">Level 12</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Featured show card -->
+            <section class="featured-show">
+                <img alt="The Witcher show banner with man standing with sword and sea background" src="https://wallpapercat.com/w/full/1/3/f/224-3840x2160-desktop-4k-the-witcher-game-background-image.jpg" width="900" height="180"/>
+                <div class="info">
+                    <h2>The Witcher</h2>
+                    <div class="details">
+                        <span>98% Match</span>
+                        <span>2 seasons</span>
+                    </div>
+                    <div class="buttons">
+                        <button>Watch</button>
+                        <button aria-label="Add to list" class="bg-white bg-opacity-20 rounded-full w-8 h-8 flex items-center justify-center text-white text-[18px] hover:bg-opacity-40 transition-colors duration-300">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <!-- Parties section -->
+            <section class="parties-section">
+                <div class="flex items-center justify-between">
+                    <h3>Parties</h3>
+                    <input aria-label="Parties slider" class="slider" max="100" min="0" type="range" value="50"/>
+                </div>
+                <div class="parties-list scrollbar-hide" tabindex="0">
+                    <!-- Party 1 -->
+                    <div class="party">
+                        <img alt="Party avatar for Cadaver" src="https://storage.googleapis.com/a1aa/image/8a8e2417-e993-4682-91f5-2ce5e295c36c.jpg" width="48" height="48"/>
+                        <h4>Cadaver</h4>
+                        <p>Horror master</p>
+                        <div class="avatars">
+                            <img alt="User  avatar 1 in Cadaver party" src="https://storage.googleapis.com/a1aa/image/146e6f55-5534-4f02-281a-79e4913111c0.jpg" width="20" height="20"/>
+                            <img alt="User  avatar 2 in Cadaver party" src="https://storage.googleapis.com/a1aa/image/bee58290-4eaf-4128-0527-d89f57519d6e.jpg" width="20" height="20"/>
+                            <img alt="User  avatar 3 in Cadaver party" src="https://storage.googleapis.com/a1aa/image/d9c8e4aa-57d6-4f21-0cf0-530c0775af73.jpg" width="20" height="20"/>
+                        </div>
+                    </div>
+                    <!-- Party 2 -->
+                    <div class="party">
+                        <img alt="Party avatar for Bladerunner 2049" src="https://storage.googleapis.com/a1aa/image/a2669262-4a94-44c7-c091-46774b4e196f.jpg" width="48" height="48"/>
+                        <h4>Bladerunner 2049</h4>
+                        <p>Sci-fi binge</p>
+                        <div class="avatars">
+                            <img alt="User  avatar 1 in Bladerunner 2049 party" src="https://storage.googleapis.com/a1aa/image/afb8c9f6-6937-4ea1-0635-f9fee00dac77.jpg" width="20" height="20"/>
+                            <img alt="User  avatar 2 in Bladerunner 2049 party" src="https://storage.googleapis.com/a1aa/image/c0522d74-70ff-4ff2-d437-7ecac3d22511.jpg" width="20" height="20"/>
+                        </div>
+                    </div>
+                    <!-- Party 3 -->
+                    <div class="party">
+                        <img alt="Party avatar for Monsters Inc" src="https://storage.googleapis.com/a1aa/image/5a29e7f5-a38c-4842-6dbd-95e96e4806a0.jpg" width="48" height="48"/>
+                        <h4>Monsters Inc.</h4>
+                        <p>Don't make me grow up</p>
+                        <div class="avatars">
+                            <img alt="User  avatar 1 in Monsters Inc                             party" src="https://storage.googleapis.com/a1aa/image/7541eec1-08de-4c19-db75-7d7e337cc01a.jpg" width="20" height="20"/>
+                            <img alt="User   avatar 2 in Monsters Inc party" src="https://storage.googleapis.com/a1aa/image/647e47c6-cec2-4584-6538-e4491d382dcc.jpg" width="20" height="20"/>
+                            <img alt="User   avatar 3 in Monsters Inc party" src="https://storage.googleapis.com/a1aa/image/d709cfc6-030e-4d3f-94d6-d4e3d59d5639.jpg" width="20" height="20"/>
+                        </div>
+                    </div>
+                    <!-- Party 4 -->
+                    <div class="party">
+                        <img alt="Party avatar for Friends" src="https://storage.googleapis.com/a1aa/image/cbd0ff3f-a102-49ae-7357-0f08cf0e200a.jpg" width="48" height="48"/>
+                        <h4>Friends</h4>
+                        <p>We were on a break!</p>
+                        <div class="avatars">
+                            <img alt="User   avatar 1 in Friends party" src="https://storage.googleapis.com/a1aa/image/98a2c370-5898-4e19-9ec9-109b3ce60afb.jpg" width="20" height="20"/>
+                            <img alt="User   avatar 2 in Friends party" src="https://storage.googleapis.com/a1aa/image/f2b85cb8-bb38-4f41-4d5f-8d028127c3d2.jpg" width="20" height="20"/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Continue watching section -->
+            <section class="continue-watching-section">
+                <h3>Continue watching</h3>
+                <div class="continue-watching-list scrollbar-hide" tabindex="0">
+                    <!-- Item 1 -->
+                    <div class="continue-watching-item">
+                        <img alt="Thumbnail for Haunting of Hill House" src="https://storage.googleapis.com/a1aa/image/57d25265-41a0-4583-6c08-865060bcc520.jpg" width="140" height="90"/>
+                        <div class="resolution">1080P</div>
+                        <p title="Haunting of Hill House">Haunting of Hill House</p>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="continue-watching-item">
+                        <img alt="Thumbnail for Ratched" src="https://storage.googleapis.com/a1aa/image/aa518caa-92f7-44da-2632-76e26c13aae6.jpg" width="140" height="90"/>
+                        <div class="resolution">1080P</div>
+                        <p title="Ratched">Ratched</p>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="continue-watching-item">
+                        <img alt="Thumbnail for El Camino" src="https://storage.googleapis.com/a1aa/image/54429274-f21e-41bb-4762-e7099336c01b.jpg" width="140" height="90"/>
+                        <div class="resolution">1080P</div>
+                        <p title="El Camino">El Camino</p>
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="continue-watching-item">
+                        <img alt="Thumbnail for Stranger Things" src="https://storage.googleapis.com/a1aa/image/d5c34ff4-58a5-4538-6421-35f511a398be.jpg" width="140" height="90"/>
+                        <div class="resolution">1080P</div>
+                        <p title="Stranger Things">Stranger Things</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- Right vertical bar -->
+        <aside class="right-bar">
+            <button aria-label="Add new">
+                <i class="fas fa-plus"></i>
+            </button>
+            <img alt="User  avatar 1 in right vertical bar" src="https://storage.googleapis.com/a1aa/image/a7ef7bbd-7aaf-4a07-8f20-53f4f56d597b.jpg" width="40" height="40"/>
+            <img alt="User  avatar 2 in right vertical bar" src="https://storage.googleapis.com/a1aa/image/7971f087-a6b8-471c-0406-4083ae355abc.jpg" width="40" height="40"/>
+            <img alt="User  avatar 3 in right vertical bar" src="https://storage.googleapis.com/a1aa/image/2984742c-db1e-4380-9c80-c7bd278597b3.jpg" width="40" height="40"/>
+            <img alt="User  avatar 4 in right vertical bar" src="https://storage.googleapis.com/a1aa/image/70421420-b1ff-44bd-84b0-13e2c4678c63.jpg" width="40" height="40"/>
+            <img alt="User  avatar 5 in right vertical bar" src="https://storage.googleapis.com/a1aa/image/ae55c4cd-83d5-426f-e671-46a0c76df12a.jpg" width="40" height="40"/>
+            <img alt="User  avatar 6 in right vertical bar" src="https://storage.googleapis.com/a1aa/image/6204b2cd-bc34-40ca-1e51-c99d9f8423c9.jpg" width="40" height="40"/>
+            <img alt="User  avatar 7 in right vertical bar" src="https://storage.googleapis.com/a1aa/image/782f5ec9-32b3-426c-45a6-8f7c29c276e4.jpg" width="40" height="40"/>
+        </aside>
+    </div>
+</body>
+</html>
